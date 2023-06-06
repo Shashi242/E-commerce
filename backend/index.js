@@ -162,6 +162,12 @@ app.post("/create-checkout-session",async(req,res)=>{
 
 })
 
+app.use(express.static(path.join(__dirname , "./client/build")));
+
+app.get("*", function (req, res){
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+})
+
 
 //server is ruuning
 app.listen(PORT, () => console.log("server is running at port : " + PORT));
