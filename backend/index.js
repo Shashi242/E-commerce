@@ -162,11 +162,11 @@ app.post("/create-checkout-session",async(req,res)=>{
 
 })
 
-app.use(express.static(path.join(__dirname , "./client/build")));
+// app.use(express.static(path.join(__dirname , "./client/build")));
 
-app.get("*", function (req, res){
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-})
+// app.get("*", function (req, res){
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// })
 
 
 //server is ruuning
