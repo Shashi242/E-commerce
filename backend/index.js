@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 //mongodb connection
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.MONGODB_URL)
+  .connect("mongodb+srv://shashi242:Shashi%40242@cluster0.ohvpytv.mongodb.net/Shashi_db")
   .then(() => console.log("Connect to Databse"))
   .catch((err) => console.log(err));
 
