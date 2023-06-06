@@ -1,0 +1,19 @@
+.payment_sec{
+    height: 200px;
+    border: solid 1px blueviolet;
+}
+.payment_btn{
+    margin-top: auto;
+}
+.qty{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.p_btn:hover{
+    color: yellow;
+}
+
+@media screen and (max-width: 673px){
+    .disp{
+        flex-direction: column;
+    }
+}
