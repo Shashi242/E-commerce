@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 //mongodb connection
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb+srv://shashi242:Shashi%40242@cluster0.ohvpytv.mongodb.net/Shashi_db")
+  .connect(process.env.MONGODB_URL)
   .then(() => console.log("Connect to Databse"))
   .catch((err) => console.log(err));
 
@@ -114,61 +114,54 @@ app.get("/product",async(req,res)=>{
 })
  
 // /*****payment getWay */
-// console.log(process.env.STRIPE_SECRET_KEY)
+console.log(process.env.STRIPE_SECRET_KEY)
 
 
-// const stripe  = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe  = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-// app.post("/create-checkout-session",async(req,res)=>{
+app.post("/create-checkout-session",async(req,res)=>{
 
-//      try{
-//       const params = {
-//           submit_type : 'pay',
-//           mode : "payment",
-//           payment_method_types : ['card'],
-//           billing_address_collection : "auto",
-//           shipping_options : [{shipping_rate : "shr_1NFHVRSIOejdpGAZyDe4oP0x"}],
+     try{
+      const params = {
+          submit_type : 'pay',
+          mode : "payment",
+          payment_method_types : ['card'],
+          billing_address_collection : "auto",
+          shipping_options : [{shipping_rate : "shr_1NFHVRSIOejdpGAZyDe4oP0x"}],
 
-//           line_items : req.body.map((item)=>{
-//             return{
-//               price_data : {
-//                 currency : "inr",
-//                 product_data : {
-//                   name : item.name,
-//                   // images : [item.image]
-//                 },
-//                 unit_amount : item.price * 100,
-//               },
-//               adjustable_quantity : {
-//                 enabled : true,
-//                 minimum : 1,
-//               },
-//               quantity : item.qty
-//             }
-//           }),
+          line_items : req.body.map((item)=>{
+            return{
+              price_data : {
+                currency : "inr",
+                product_data : {
+                  name : item.name,
+                  // images : [item.image]
+                },
+                unit_amount : item.price * 100,
+              },
+              adjustable_quantity : {
+                enabled : true,
+                minimum : 1,
+              },
+              quantity : item.qty
+            }
+          }),
 
-//           success_url : `${process.env.FRONTEND_URL}/success`,
-//           cancel_url : `${process.env.FRONTEND_URL}/cancel`,
+          success_url : `${process.env.FRONTEND_URL}/success`,
+          cancel_url : `${process.env.FRONTEND_URL}/cancel`,
 
-//       }
+      }
 
       
-//       const session = await stripe.checkout.sessions.create(params)
-//       // console.log(session)
-//       res.status(200).json(session.id)
-//      }
-//      catch (err){
-//         res.status(err.statusCode || 500).json(err.message)
-//      }
+      const session = await stripe.checkout.sessions.create(params)
+      // console.log(session)
+      res.status(200).json(session.id)
+     }
+     catch (err){
+        res.status(err.statusCode || 500).json(err.message)
+     }
 
-// })
-
-// app.use(express.static(path.join(__dirname , "./client/build")));
-
-// app.get("*", function (req, res){
-//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
-// })
-
+})
 
 //server is ruuning
 app.listen(PORT, () => console.log("server is running at port : " + PORT));
